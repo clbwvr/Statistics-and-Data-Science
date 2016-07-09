@@ -5,6 +5,7 @@
 # and thus can make a better fit when we have a large p.
 
 # Let's compare ridge regression and plain old least squares to fit "score" using pscl.admit (phd admitance data)
+set.seed(123)
 install.packages("pscl")
 library(MASS)
 library(pscl)
@@ -40,7 +41,7 @@ for(i in 1:nrow(fit.ridge$beta)){lines(lambda.grid,fit.ridge$beta[i,],col=i)}
 # the coefficients at lambda = 0 are equal to the ones from the slr (after standardization)
 # but as lambda grows, they shrink towards 0
 
-# Let's use test set validation to find the best lambda, then compare that ridge regression fit 
+# Let's use test set validation to find tphe best lambda, then compare that ridge regression fit 
 # to the slr's fit's test mse.
 mse <- rep(NA,length(lambda.grid))
 for(i in 1:length(mse)){
@@ -52,7 +53,9 @@ lambda.grid[which.min(mse)]
 plot(lambda.grid,mse,type="l")
 points(lambda.grid[which.min(mse)],min(mse),col="red",pch=19)
 
-# lambda = .55 is gives the best mse for us with an mse of 0.55
-# which is better than the slr mse, .92.
-# Great improvement when the resonse is 1 to 5 That's a half a score of improvement.
+# lambda = .55 is gives the best mse for us with an mse of 1.43
 
+fit.slr.testmse
+fit.ridge.testmse
+
+# Ridge has .3 lower mse. On the scale of the response (1 to 5), this is significant!
