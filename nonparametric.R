@@ -16,7 +16,7 @@ simple_nonpar <- function(x,y,windownum){
     a <- iter[i]
     b <- iter[i+1]
     ybar[i] <- mean(y[which(x>=a & x<=b)])
-    # No NaN's please!
+    # No NaN's
     if(!is.finite(ybar[i])){
       if(i > 1) {ybar[i] <- ybar[i-1]}
       else ybar[i] <- mean(ybar,na.rm = T)
@@ -26,6 +26,6 @@ simple_nonpar <- function(x,y,windownum){
   return(data.frame(ybar,iterbar))
 }
 
-model<-simple_nonpar(x,y,50)
-g + geom_line(aes(model$iterbar,model$ybar),col="blue")
+model<-simple_nonpar(x,y,10)
+g + geom_line(aes(model$iterbar,model$ybar),col="red")
 
