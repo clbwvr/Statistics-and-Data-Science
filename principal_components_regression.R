@@ -14,6 +14,14 @@
 # contained in Z1, . . ., ZM, and by estimating only M < p coefficients instead of p,
 # we can mitigate overfitting.
 
+# The first principal component is the linear combination of x-variables 
+# that has maximum variance (among all linear combinations), 
+# so it accounts for as much variation in the data as possible.
+# The second principal component  is the linear combination of x-variables
+# that accounts for as much of the remaining variation as possible, 
+# with the constraint that the correlation between the first and second component is 0
+
+
 # Simulate data
 set.seed(123)
 y <- 1:200 + 40*rnorm(200)
