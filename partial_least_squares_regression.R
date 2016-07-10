@@ -24,6 +24,7 @@ x1 <- 1:200 + 20*rnorm(200)
 x2 <- 1:200 + 20*rnorm(200)
 x3 <- 1:200 + 20*rnorm(200)
 x4 <- 1:200 + 20*rnorm(200)
+data<-data.frame(y,x1,x2,x3,x4)
 
 # MLR 
 fit.mlr <- lm(y~x1+x2+x3+x4)
@@ -39,7 +40,10 @@ z1 <- x1 * coef(lm(y~x1+x2+x3+x4))[2] +
   x3 * coef(lm(y~x1+x2+x3+x4))[4] +
   x4 * coef(lm(y~x1+x2+x3+x4))[5]
 fit.pls1 <- lm(y~z1)
+fit.pls1$residuals
 summary(fit.pls1)
+
+# The pls does better than the MLR in terms of RSS and MSE
 
 # There's very little variation left after the first component, but 
 # we'll do it anyway and get a worthless component (pvalue = 1 haha)
@@ -50,4 +54,14 @@ z2 <- x1 * coef(lm(fit.pls1$residuals ~ x1+x2+x3+x4))[2] +
 fit.pls2 <- lm(y~z1+z2)
 summary(fit.pls2)
 
-# The pls does better than the MLR in terms of RSS and MSE
+# using the pls function
+install.packages("pls")
+library(pls)
+pls.fit <- plsr(y~x1+x2+x3+x4,scale=T,ncomp = 1)
+
+# plot the residuals to see if they're equivalent
+par(pty="s")
+plot(fit.pls1$residuals, pls.fit$residuals)
+lines(-150:150,-150:150)
+
+
